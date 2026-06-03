@@ -1,0 +1,22 @@
+{
+  "name": "visual-memory",
+  "displayName": "Visual Memory",
+  "description": "Local photo/video indexing and visual search for OpenClaw through mneme-mcp.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "homepage": "https://github.com/bkennedyshit/openclaw-polymath",
+  "mcp": {
+    "server": "mneme",
+    "install": "mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp",
+    "tools": [
+      "media_index",
+      "media_search",
+      "media_search_by_image",
+      "media_describe"
+    ]
+  },
+  "privacy": {
+    "localOnly": true,
+    "uploadsMedia": false
+  }
+}
