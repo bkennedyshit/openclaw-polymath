@@ -11,6 +11,7 @@ OpenClaw agent
   -> visual-memory skill
   -> mneme MCP tools
   -> local media index + visual/text search
+  -> optional local GPU release/reclaim tools
   -> previewable media results
 ```
 
@@ -26,10 +27,17 @@ attachments, and how to return previewable media results.
 - `media_search`
 - `media_search_by_image`
 - `media_describe`
+- `gpu_status`
+- `gpu_release`
+- `gpu_reclaim`
+- `gpu_evacuate`
 
 The implementation should be extracted from Polymath's media-memory/content RAG
 work so OpenClaw, Hermes, or any MCP host can use it without running the full
 Polymath app.
+
+Mneme returns neutral `media_artifacts.v1` JSON. It should not ship UI colors,
+cards, gradients, or Polymath styling. The MCP host owns rendering.
 
 `mcp/polymath-media-mcp.mjs` is only a development adapter. It calls a running
 Polymath gateway and proves the tool contract against the current Polymath demo

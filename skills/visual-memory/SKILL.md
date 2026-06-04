@@ -6,6 +6,10 @@ tools:
   - media_search
   - media_search_by_image
   - media_describe
+  - gpu_status
+  - gpu_release
+  - gpu_reclaim
+  - gpu_evacuate
 ---
 
 # Visual Memory
@@ -26,6 +30,13 @@ Prefer `media_search_by_image` when the user provides an image and wants visuall
 similar items. Use `media_describe` when the user asks what is in a specific
 media file.
 
+Use `gpu_status` before GPU-heavy local tasks when the user is coordinating
+video work, image generation, upscaling, VLM tagging, or another local model
+process. Use `gpu_release` to unload resident Ollama models and hand VRAM to
+that workflow, and use `gpu_reclaim` with the returned token when the workflow
+is done. Use `gpu_evacuate` only when the user asks to free VRAM immediately
+without creating a lease.
+
 Return media results as previewable content cards when the host supports rich
 output. Each result should include:
 
@@ -35,6 +46,10 @@ output. Each result should include:
 - `reason`: short explanation for why this media matched.
 - `timestamp` or `time_range`: when available for video/audio hits.
 - `preview`: true when the file can be rendered by the host UI.
+
+Mneme returns neutral `media_artifacts.v1` JSON. Preserve the host application's
+native styling; do not introduce custom colors, cards, gradients, or branding
+unless the host already provides that UI.
 
 Do not dump long bare paths as the main answer. Put the path behind a `Copy path`
 or equivalent action when rich output is available, and show the user the actual
