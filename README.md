@@ -12,6 +12,7 @@ OpenClaw skill. The full Polymath agent runtime remains a separate project.
 - Search photos and videos by natural language.
 - Search by image similarity.
 - Describe media items for agent workflows.
+- Return media as previewable result cards instead of plain path dumps when the host supports rich output.
 - Keep private creator skills out of the public package.
 
 ## Install
@@ -42,6 +43,16 @@ media_search
 media_search_by_image
 media_describe
 ```
+
+## Output Contract
+
+Search results should be treated as media artifacts, not just text. A host UI can
+render each result as a card with the image/video/audio preview, a short reason
+the item matched, optional timestamp or time range, and `Preview`, `Reveal`, and
+`Copy path` actions.
+
+The absolute path should stay available for posting, editing, scheduling, or
+handoff into other creator tools, but it should not dominate the response.
 
 ## Skill
 

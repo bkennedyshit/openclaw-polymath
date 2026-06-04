@@ -23,4 +23,6 @@ work as a blog header.
 ```
 
 OpenClaw should call `media_index` first if needed, then `media_search`, and
-return paths plus short reasons for each match.
+return previewable media cards plus short reasons for each match. Keep absolute
+paths available through `Copy path` or similar actions, but show the actual
+image/video/audio result first when the host UI supports it.

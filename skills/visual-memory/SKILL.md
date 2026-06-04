@@ -20,8 +20,22 @@ Prefer `media_search_by_image` when the user provides an image and wants visuall
 similar items. Use `media_describe` when the user asks what is in a specific
 media file.
 
-Return concrete file paths, timestamps when available, short reasons, and any
-metadata returned by the tool. Do not invent matches when the tool returns none.
+Return media results as previewable content cards when the host supports rich
+output. Each result should include:
+
+- `title`: filename or human-readable clip name.
+- `kind`: image, video, audio, or unknown.
+- `path`: absolute local path, kept available for copy/reveal actions.
+- `reason`: short explanation for why this media matched.
+- `timestamp` or `time_range`: when available for video/audio hits.
+- `preview`: true when the file can be rendered by the host UI.
+
+Do not dump long bare paths as the main answer. Put the path behind a `Copy path`
+or equivalent action when rich output is available, and show the user the actual
+image/video/audio preview first. When rich output is not available, use concise
+Markdown links or a compact table with path values.
+
+Do not invent matches when the tool returns none.
 
 Do not upload local media to a cloud service unless the user explicitly asks for
 that separate action.
