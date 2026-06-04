@@ -13,6 +13,12 @@ tools:
 Use this skill when the user wants to index, search, organize, or inspect local
 photo and video libraries.
 
+When the user provides an uploaded photo/video/reel as an attachment, treat it
+as temporary session context first. Use its local path to answer the current
+question or run visual similarity search when appropriate. Do not call
+`media_index` or otherwise add the attachment to durable visual memory unless
+the user explicitly asks to add, save, index, catalog, or remember it.
+
 Prefer `media_index` when the user points at a folder that has not been indexed.
 Prefer `media_search` for natural-language searches such as finding shots,
 finished videos, thumbnails, archive images, or clips matching a description.

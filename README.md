@@ -64,6 +64,17 @@ Channel behavior depends on the host:
 - If rich output is unavailable, return a short text summary plus paths as a
   fallback.
 
+## Input Contract
+
+User-sent photos, videos, and reels should be treated as session attachments
+first. Save the upload to a local inbox, pass the local path to the agent, and
+use it for the current request.
+
+Do not automatically index or catalog uploaded attachments. Only add an inbound
+file to visual memory when the user explicitly asks to add, save, index,
+catalog, or remember it. This keeps one-off examples, private screenshots, and
+large camera footage out of the durable media archive by default.
+
 ## Skill
 
 The skill lives in [`skills/visual-memory/SKILL.md`](skills/visual-memory/SKILL.md).

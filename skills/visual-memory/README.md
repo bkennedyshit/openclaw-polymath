@@ -15,6 +15,13 @@ mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp
 - `media_search_by_image`: image-to-image similarity search.
 - `media_describe`: describe a media file.
 
+## Uploaded Media
+
+If the user sends a photo/video/reel into chat, treat that upload as temporary
+session context first. Save it to a local inbox and pass the path to the agent.
+Only index/catalog it when the user explicitly asks to add, save, index,
+catalog, or remember it.
+
 ## Example
 
 ```text
