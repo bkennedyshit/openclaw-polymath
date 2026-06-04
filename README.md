@@ -54,6 +54,16 @@ the item matched, optional timestamp or time range, and `Preview`, `Reveal`, and
 The absolute path should stay available for posting, editing, scheduling, or
 handoff into other creator tools, but it should not dominate the response.
 
+Channel behavior depends on the host:
+
+- Browser hosts should render cards inline.
+- Local desktop hosts should offer `Reveal` and `Copy path`.
+- Chat transports such as Telegram should send the text answer, then attach the
+  referenced media files when the files are reachable and small enough for the
+  transport.
+- If rich output is unavailable, return a short text summary plus paths as a
+  fallback.
+
 ## Skill
 
 The skill lives in [`skills/visual-memory/SKILL.md`](skills/visual-memory/SKILL.md).
