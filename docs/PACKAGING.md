@@ -4,7 +4,7 @@ This repo is the OpenClaw-facing package for Polymath visual memory.
 
 ## Release Surfaces
 
-1. `polymath-media-mcp.mjs` as the OpenClaw-facing MCP bridge.
+1. `mneme-mcp` as the standalone OpenClaw-facing MCP server.
 2. `openclaw-polymath` on GitHub for OpenClaw install docs and skill metadata.
 3. Optional ClawHub listing after the install shape is verified.
 
@@ -25,6 +25,6 @@ This repo is the OpenClaw-facing package for Polymath visual memory.
 ## Release Checklist
 
 - Run a leak scan for private terms and credentials.
-- Verify `mcporter add polymath-media -- node ./mcp/polymath-media-mcp.mjs`.
+- Verify `mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp`.
 - Verify tool list includes `media_index`, `media_search`, `media_search_by_image`, and `media_describe`.
-- Tag the repo once the bridge and skill metadata are verified locally.
+- Tag the repo once the matching standalone MCP package is verified locally.

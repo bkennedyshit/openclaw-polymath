@@ -3,9 +3,9 @@
 OpenClaw integration package for Polymath visual memory.
 
 This repo packages the small, useful surface area OpenClaw users should install first:
-local photo/video memory through the Polymath gateway, exposed as MCP tools and
-a generic OpenClaw skill. The full Polymath agent runtime remains a separate
-project.
+local photo/video memory as a standalone MCP server plus a generic OpenClaw
+skill. Polymath is the origin project and portfolio demo, not a required runtime
+dependency for OpenClaw users.
 
 ## What It Adds
 
@@ -18,20 +18,16 @@ project.
 
 ## Install
 
-Run Polymath locally first, then expose its media tools to OpenClaw.
-
-Optional configuration:
+Install the standalone media-memory MCP server:
 
 ```bash
-POLYMATH_GATEWAY_URL=http://127.0.0.1:18789
-POLYMATH_TOKEN=<token or omit when ~/.polymath/auth.key exists>
+mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp
 ```
 
 Then confirm OpenClaw can see the tools:
 
 ```bash
-mcporter add polymath-media -- node ./mcp/polymath-media-mcp.mjs
-mcporter list polymath-media
+mcporter list mneme
 ```
 
 Expected tools:
@@ -81,9 +77,9 @@ It tells OpenClaw how to use the Mneme MCP tools for creator media workflows.
 
 ## Privacy
 
-Polymath is local-first. Your media library stays on the machine running the
-Polymath gateway. OpenClaw receives file paths, metadata, and search results
-from the local bridge process.
+The media server is local-first. Your media library stays on the machine running
+the MCP process. OpenClaw receives file paths, metadata, and search results from
+that local tool process.
 
 ## Relationship To Polymath
 
@@ -91,8 +87,13 @@ Polymath is the full local creator-agent runtime: gateway, web UI, skills,
 memory, media catalog, GPU broker, and MCP server/client support.
 
 This repo is narrower: it exists so OpenClaw users can install Polymath-style
-visual memory through a small bridge instead of adopting the whole Polymath
-runtime.
+visual memory without adopting the whole Polymath runtime.
+
+## Dev Adapter
+
+`mcp/polymath-media-mcp.mjs` is a development adapter that calls a running
+Polymath gateway. It is useful for local demos while extracting the standalone
+server, but it is not the ClawHub install target.
 
 ## Intentionally Excluded
 
