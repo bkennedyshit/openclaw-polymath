@@ -3,8 +3,9 @@
 OpenClaw integration package for Polymath visual memory.
 
 This repo packages the small, useful surface area OpenClaw users should install first:
-local photo/video memory through `mneme-mcp`, exposed as MCP tools and a generic
-OpenClaw skill. The full Polymath agent runtime remains a separate project.
+local photo/video memory through the Polymath gateway, exposed as MCP tools and
+a generic OpenClaw skill. The full Polymath agent runtime remains a separate
+project.
 
 ## What It Adds
 
@@ -17,22 +18,20 @@ OpenClaw skill. The full Polymath agent runtime remains a separate project.
 
 ## Install
 
-```bash
-mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp
-```
+Run Polymath locally first, then expose its media tools to OpenClaw.
 
 Optional configuration:
 
 ```bash
-MNEME_DB_PATH=~/.mneme/mneme.db \
-MNEME_BACKEND=auto \
-mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp
+POLYMATH_GATEWAY_URL=http://127.0.0.1:18789
+POLYMATH_TOKEN=<token or omit when ~/.polymath/auth.key exists>
 ```
 
 Then confirm OpenClaw can see the tools:
 
 ```bash
-mcporter list mneme
+mcporter add polymath-media -- node ./mcp/polymath-media-mcp.mjs
+mcporter list polymath-media
 ```
 
 Expected tools:
@@ -82,9 +81,9 @@ It tells OpenClaw how to use the Mneme MCP tools for creator media workflows.
 
 ## Privacy
 
-Mneme is local-first. Your media library stays on the machine running the MCP
-server. OpenClaw receives file paths, metadata, and search results from the local
-tool process.
+Polymath is local-first. Your media library stays on the machine running the
+Polymath gateway. OpenClaw receives file paths, metadata, and search results
+from the local bridge process.
 
 ## Relationship To Polymath
 
@@ -92,7 +91,8 @@ Polymath is the full local creator-agent runtime: gateway, web UI, skills,
 memory, media catalog, GPU broker, and MCP server/client support.
 
 This repo is narrower: it exists so OpenClaw users can install Polymath-style
-visual memory without adopting the whole Polymath runtime.
+visual memory through a small bridge instead of adopting the whole Polymath
+runtime.
 
 ## Intentionally Excluded
 

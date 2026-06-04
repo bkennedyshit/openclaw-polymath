@@ -1,11 +1,11 @@
 # Visual Memory Skill
 
-This OpenClaw skill wraps the `mneme-mcp` visual memory server.
+This OpenClaw skill wraps the Polymath media MCP bridge.
 
 ## Install Server
 
 ```bash
-mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp
+mcporter add polymath-media -- node ./mcp/polymath-media-mcp.mjs
 ```
 
 ## Tools

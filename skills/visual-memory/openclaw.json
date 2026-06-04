@@ -1,13 +1,13 @@
 {
   "name": "visual-memory",
   "displayName": "Visual Memory",
-  "description": "Local photo/video indexing and visual search for OpenClaw through mneme-mcp.",
+  "description": "Local photo/video indexing and visual search for OpenClaw through the Polymath gateway.",
   "version": "0.1.0",
   "license": "MIT",
   "homepage": "https://github.com/bkennedyshit/openclaw-polymath",
   "mcp": {
-    "server": "mneme",
-    "install": "mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp",
+    "server": "polymath-media",
+    "install": "mcporter add polymath-media -- node ./mcp/polymath-media-mcp.mjs",
     "tools": [
       "media_index",
       "media_search",
