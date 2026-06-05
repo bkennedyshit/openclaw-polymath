@@ -7,14 +7,25 @@ Install this skill together with
 Mneme is the local MCP engine; this skill is the OpenClaw behavior layer that
 knows when to index, search, preview, reveal, copy paths, and release GPU memory.
 
-Creator automation and paid agentic skill work live at [Axon](https://axon.nepa-ai.com).
-The Mneme project site is planned for [mneme.nepa-ai.com](https://mneme.nepa-ai.com).
+Creator automation and paid OpenClaw skill work live at
+[Axon](https://axon.nepa-ai.com). Mneme product updates, docs, and local
+visual-memory releases live at [mneme.nepa-ai.com](https://mneme.nepa-ai.com).
 
 ## Install Server
 
 ```bash
 mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp
 ```
+
+Install the OpenClaw plugin + skill package:
+
+```bash
+openclaw plugins install @nepa-ai/openclaw-polymath
+openclaw plugins enable mneme
+```
+
+ClawHub users can install the OpenClaw Polymath package from
+https://clawhub.ai/ and use this skill with the `mneme` MCP server above.
 
 ## Tools
 
@@ -53,3 +64,9 @@ If the host is a chat channel instead of a browser UI, send the text answer firs
 and then attach the referenced media files when the local runtime can access
 them. If the file is too large or not reachable from that runtime, fall back to a
 short note plus the path.
+
+## More Skills
+
+This public skill is the generic local visual-memory layer. Paid creator
+workflows, brand-specific skill packs, and OpenClaw automations are available
+through [Axon](https://axon.nepa-ai.com).

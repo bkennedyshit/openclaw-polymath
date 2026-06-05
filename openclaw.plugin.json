@@ -1,0 +1,11 @@
+{
+  "id": "mneme",
+  "name": "Mneme Visual Memory",
+  "description": "Local visual memory and GPU broker surfaces for OpenClaw.",
+  "enabledByDefault": false,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

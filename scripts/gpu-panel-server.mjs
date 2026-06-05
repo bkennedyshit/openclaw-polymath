@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const htmlPath = join(root, "ui", "gpu-panel.html");
 const port = Number(process.env.MNEME_GPU_PANEL_PORT || 19117);
-const mcporterCwd = process.env.MCPORTER_CWD || "C:\\Users\\billk\\projects";
+const mcporterCwd = process.env.MCPORTER_CWD || root;
 let mcporterBin = process.env.MCPORTER_BIN || null;
 
 function readBody(req) {
@@ -85,8 +85,8 @@ async function route(req, res) {
       return;
     }
 
-    if (req.method === "POST" && req.url?.startsWith("/api/gpu/")) {
-      const action = req.url.split("/").pop();
+    if (req.method === "POST" && (req.url?.startsWith("/api/gpu/") || req.url?.startsWith("/api/"))) {
+      const action = req.url.split("?")[0].split("/").pop();
       const body = await readBody(req);
       const toolByAction = {
         status: "gpu_status",

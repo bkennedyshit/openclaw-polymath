@@ -50,6 +50,7 @@ function flattenNodes(value) {
   const nested = [
     ...flattenNodes(value.nodes),
     ...flattenNodes(value.connected),
+    ...flattenNodes(value.paired),
     ...flattenNodes(value.pending),
     ...flattenNodes(value.items),
     ...flattenNodes(value.results),
@@ -126,9 +127,20 @@ async function main() {
   if (process.env.OPENCLAW_GATEWAY_URL) args.push("--url", process.env.OPENCLAW_GATEWAY_URL);
   if (process.env.OPENCLAW_GATEWAY_TOKEN) args.push("--token", process.env.OPENCLAW_GATEWAY_TOKEN);
 
-  const stdout = await exec(openclaw, args);
-  if (stdout.trim()) process.stdout.write(stdout);
-  console.log(`Mneme GPU panel presented inside OpenClaw Canvas on node ${node}: ${target}`);
+  try {
+    const stdout = await exec(openclaw, args);
+    if (stdout.trim()) process.stdout.write(stdout);
+    console.log(`Mneme GPU panel presented inside OpenClaw Canvas on node ${node}: ${target}`);
+  } catch (err) {
+    const message = err.message || String(err);
+    if (/canvas\.present|node command not allowed|command not declared by node/i.test(message)) {
+      throw new Error(
+        `OpenClaw node ${node} does not currently allow Canvas presentation commands. ` +
+        "Install/enable the Mneme OpenClaw plugin route instead of using a standalone browser tab.",
+      );
+    }
+    throw err;
+  }
 }
 
 main().catch((err) => {

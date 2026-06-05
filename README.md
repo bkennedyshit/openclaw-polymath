@@ -1,6 +1,7 @@
 # OpenClaw Polymath
 
-OpenClaw integration package for Polymath visual memory.
+OpenClaw plugin + skill package for Polymath visual memory and Mneme GPU
+broker controls.
 
 This repo packages the small, useful surface area OpenClaw users should install first:
 local photo/video memory as a standalone MCP server plus a generic OpenClaw
@@ -12,8 +13,9 @@ This repo is complementary to
 OpenClaw users should install both: Mneme is the local MCP engine, and this repo
 contains the Visual Memory skill that teaches OpenClaw when and how to use it.
 
-Creator automation and paid agentic skill work live at [Axon](https://axon.nepa-ai.com).
-The Mneme project site is planned for [mneme.nepa-ai.com](https://mneme.nepa-ai.com).
+For more OpenClaw-ready creator automations and paid agentic skill work, visit
+[Axon](https://axon.nepa-ai.com). For Mneme product updates, docs, and local
+visual-memory releases, visit [mneme.nepa-ai.com](https://mneme.nepa-ai.com).
 
 ## What It Adds
 
@@ -51,26 +53,51 @@ gpu_reclaim
 gpu_evacuate
 ```
 
-Then install the complementary Visual Memory skill from this repo through
-OpenClaw/ClawHub. The MCP server and the skill are meant to work together.
+Then install the OpenClaw plugin + skill package:
 
-## OpenClaw GPU Panel
+```bash
+openclaw plugins install @nepa-ai/openclaw-polymath
+openclaw plugins enable mneme
+```
+
+For ClawHub users, install the `OpenClaw Polymath` package/listing, then confirm
+that the `mneme` plugin is enabled and the `visual-memory` skill is available.
+The MCP server, plugin, and skill are meant to work together.
+
+## OpenClaw GPU Surface
 
 Mneme includes GPU broker tools so local creator workflows can release VRAM
 before a render, reclaim the model afterward, and inspect current GPU state.
 
-For the clean OpenClaw experience, present the panel inside OpenClaw Canvas:
+The OpenClaw-facing integration should be installed as a plugin route, not as a
+separate browser tab. The plugin serves the GPU surface from the gateway at:
+
+```text
+/mneme/gpu
+```
+
+That gives users a demoable OpenClaw-served tab/page without starting a loose
+localhost frontend. The plugin also registers native gateway methods for host UI
+integrations:
+
+```text
+mneme.gpu.status
+mneme.gpu.release
+mneme.gpu.reclaim
+mneme.gpu.evacuate
+```
+
+Native persistent Control UI sidebar injection depends on OpenClaw exposing or
+accepting a frontend extension point. Until then, `/mneme/gpu` is the public
+demo surface and the gateway methods are the backend contract.
+
+There is also a development Canvas presenter:
 
 ```bash
 node scripts/openclaw-canvas-gpu-panel.mjs
 ```
 
-The script starts the local panel bridge at `http://127.0.0.1:19117/` if needed,
-then asks OpenClaw to show it in Canvas. It uses OpenClaw's normal gateway
-configuration by default.
-
-OpenClaw Canvas requires a paired OpenClaw node. If the launcher reports that no
-connected node exists, start/pair a node first:
+It requires a paired OpenClaw node with Canvas commands enabled:
 
 ```bash
 openclaw node run --host 127.0.0.1 --port 18789
@@ -85,13 +112,6 @@ MNEME_GPU_PANEL_PORT=19117
 OPENCLAW_NODE=<node id, name, or IP>
 OPENCLAW_GATEWAY_URL=<gateway websocket url>
 OPENCLAW_GATEWAY_TOKEN=<gateway token>
-```
-
-If OpenClaw Canvas is not available, the same panel can still be opened directly
-in a browser by running:
-
-```bash
-node scripts/gpu-panel-server.mjs
 ```
 
 ## Output Contract
@@ -129,6 +149,14 @@ large camera footage out of the durable media archive by default.
 
 The skill lives in [`skills/visual-memory/SKILL.md`](skills/visual-memory/SKILL.md).
 It tells OpenClaw how to use the Mneme MCP tools for creator media workflows.
+
+## More Skills
+
+This public package includes generic visual memory and GPU broker workflows.
+Private creator workflows, brand-specific automations, and paid OpenClaw skill
+packs are available through [Axon](https://axon.nepa-ai.com). Mneme-specific
+product updates and local visual-memory resources are available at
+[mneme.nepa-ai.com](https://mneme.nepa-ai.com).
 
 ## Privacy
 

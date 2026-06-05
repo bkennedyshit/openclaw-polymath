@@ -1,0 +1,29 @@
+{
+  "name": "@nepa-ai/openclaw-polymath",
+  "version": "0.2.0",
+  "description": "OpenClaw integration package for Polymath visual memory and Mneme GPU controls.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/bkennedyshit/openclaw-polymath",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkennedyshit/openclaw-polymath.git"
+  },
+  "files": [
+    "openclaw.plugin.json",
+    "plugin/",
+    "skills/",
+    "ui/",
+    "docs/",
+    "README.md",
+    "LICENSE"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./plugin/index.mjs"
+    ],
+    "skills": [
+      "./skills/visual-memory"
+    ]
+  }
+}
