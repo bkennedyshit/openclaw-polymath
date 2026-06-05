@@ -82,9 +82,12 @@ skill-only upload flow.
 ## Release Checklist
 
 - Run a leak scan for private terms and credentials.
-- Verify `npm pack` includes `plugin/`, `skills/`, `ui/`, docs, README, and LICENSE.
+- Verify `npm pack` includes `plugin/`, `mcp/`, `scripts/`, `skills/`, `ui/`, docs, README, and LICENSE.
 - Verify `mcporter add mneme -- uvx --from 'mneme-mcp[clip,video]' mneme-mcp`.
 - Verify `openclaw plugins install <package>` enables plugin discovery.
 - Verify the `visual-memory` skill appears in the OpenClaw skill install path or ClawHub listing.
 - Verify tool list includes media tools plus `gpu_status`, `gpu_release`, `gpu_reclaim`, and `gpu_evacuate`.
+- Verify OpenClaw gateway methods include `mneme.media.search`,
+  `mneme.media.index`, `mneme.gpu.status`, `mneme.gpu.release`,
+  `mneme.gpu.reclaim`, and `mneme.gpu.evacuate`.
 - Tag the repo once the matching standalone MCP package is verified locally.

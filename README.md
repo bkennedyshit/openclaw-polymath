@@ -99,7 +99,15 @@ mneme.gpu.status
 mneme.gpu.release
 mneme.gpu.reclaim
 mneme.gpu.evacuate
+mneme.media.index
+mneme.media.search
+mneme.media.searchByImage
+mneme.media.describe
 ```
+
+The GPU methods call the local `mneme` MCP tools through `mcporter`. The media
+methods call the local Polymath gateway and reuse the existing local media index
+when `POLYMATH_TOKEN` or `~/.polymath/auth.key` is available.
 
 Native persistent Control UI sidebar injection depends on OpenClaw exposing or
 accepting a frontend extension point. Until then, `/mneme/gpu` is the public
@@ -163,6 +171,13 @@ large camera footage out of the durable media archive by default.
 
 The skill lives in [`skills/visual-memory/SKILL.md`](skills/visual-memory/SKILL.md).
 It tells OpenClaw how to use the Mneme MCP tools for creator media workflows.
+
+Direct gateway smoke test:
+
+```powershell
+openclaw gateway call mneme.media.search --timeout 30000 --json --params '{"query":"openclaw visual memory","top_k":2,"min_score":0}'
+openclaw gateway call mneme.gpu.evacuate --timeout 30000 --json
+```
 
 ## More Skills
 

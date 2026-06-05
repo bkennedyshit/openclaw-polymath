@@ -71,6 +71,8 @@
   "files": [
     "openclaw.plugin.json",
     "plugin/",
+    "mcp/",
+    "scripts/",
     "skills/",
     "ui/",
     "docs/",
