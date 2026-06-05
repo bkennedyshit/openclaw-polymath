@@ -52,7 +52,10 @@
         ]
       },
       "compatibility": {
-        "minGatewayVersion": "2026.4.12"
+        "pluginApiRange": ">=2026.4.12",
+        "minGatewayVersion": "2026.4.12",
+        "builtWithOpenClawVersion": "2026.4.12",
+        "pluginSdkVersion": "2026.4.12"
       },
       "links": {
         "axon": "https://axon.nepa-ai.com",
@@ -80,6 +83,14 @@
     ],
     "skills": [
       "./skills/visual-memory"
-    ]
+    ],
+    "compat": {
+      "pluginApi": ">=2026.4.12",
+      "minGatewayVersion": "2026.4.12"
+    },
+    "build": {
+      "openclawVersion": "2026.4.12",
+      "pluginSdkVersion": "2026.4.12"
+    }
   }
 }
