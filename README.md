@@ -54,6 +54,46 @@ gpu_evacuate
 Then install the complementary Visual Memory skill from this repo through
 OpenClaw/ClawHub. The MCP server and the skill are meant to work together.
 
+## OpenClaw GPU Panel
+
+Mneme includes GPU broker tools so local creator workflows can release VRAM
+before a render, reclaim the model afterward, and inspect current GPU state.
+
+For the clean OpenClaw experience, present the panel inside OpenClaw Canvas:
+
+```bash
+node scripts/openclaw-canvas-gpu-panel.mjs
+```
+
+The script starts the local panel bridge at `http://127.0.0.1:19117/` if needed,
+then asks OpenClaw to show it in Canvas. It uses OpenClaw's normal gateway
+configuration by default.
+
+OpenClaw Canvas requires a paired OpenClaw node. If the launcher reports that no
+connected node exists, start/pair a node first:
+
+```bash
+openclaw node run --host 127.0.0.1 --port 18789
+openclaw nodes pending
+openclaw nodes approve <requestId>
+```
+
+Optional environment variables:
+
+```text
+MNEME_GPU_PANEL_PORT=19117
+OPENCLAW_NODE=<node id, name, or IP>
+OPENCLAW_GATEWAY_URL=<gateway websocket url>
+OPENCLAW_GATEWAY_TOKEN=<gateway token>
+```
+
+If OpenClaw Canvas is not available, the same panel can still be opened directly
+in a browser by running:
+
+```bash
+node scripts/gpu-panel-server.mjs
+```
+
 ## Output Contract
 
 Search results should be treated as media artifacts, not just text. A host UI can
