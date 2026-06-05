@@ -7,6 +7,14 @@ local photo/video memory as a standalone MCP server plus a generic OpenClaw
 skill. Polymath is the origin project and portfolio demo, not a required runtime
 dependency for OpenClaw users.
 
+This repo is complementary to
+[`mneme-mcp`](https://github.com/bkennedyshit/polymathes/tree/main/mneme).
+OpenClaw users should install both: Mneme is the local MCP engine, and this repo
+contains the Visual Memory skill that teaches OpenClaw when and how to use it.
+
+Creator automation and paid agentic skill work live at [Axon](https://axon.nepa-ai.com).
+The Mneme project site is planned for [mneme.nepa-ai.com](https://mneme.nepa-ai.com).
+
 ## What It Adds
 
 - Index local media folders without uploading files.
@@ -37,7 +45,14 @@ media_index
 media_search
 media_search_by_image
 media_describe
+gpu_status
+gpu_release
+gpu_reclaim
+gpu_evacuate
 ```
+
+Then install the complementary Visual Memory skill from this repo through
+OpenClaw/ClawHub. The MCP server and the skill are meant to work together.
 
 ## Output Contract
 

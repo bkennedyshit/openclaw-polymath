@@ -2,6 +2,14 @@
 
 This OpenClaw skill wraps a standalone local media-memory MCP server.
 
+Install this skill together with
+[`mneme-mcp`](https://github.com/bkennedyshit/polymathes/tree/main/mneme).
+Mneme is the local MCP engine; this skill is the OpenClaw behavior layer that
+knows when to index, search, preview, reveal, copy paths, and release GPU memory.
+
+Creator automation and paid agentic skill work live at [Axon](https://axon.nepa-ai.com).
+The Mneme project site is planned for [mneme.nepa-ai.com](https://mneme.nepa-ai.com).
+
 ## Install Server
 
 ```bash
