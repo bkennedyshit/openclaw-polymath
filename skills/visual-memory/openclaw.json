@@ -3,7 +3,7 @@
   "displayName": "Visual Memory",
   "description": "Local photo/video indexing and visual search for OpenClaw through a standalone media-memory MCP server.",
   "version": "0.2.0",
-  "license": "MIT",
+  "license": "MIT-0",
   "homepage": "https://github.com/bkennedyshit/openclaw-polymath",
   "mcp": {
     "server": "mneme",

@@ -64,6 +64,20 @@ For ClawHub users, install the `OpenClaw Polymath` package/listing, then confirm
 that the `mneme` plugin is enabled and the `visual-memory` skill is available.
 The MCP server, plugin, and skill are meant to work together.
 
+### Publishing To ClawHub
+
+ClawHub's Skills tab expects a skill folder with `SKILL.md` at the selected
+folder root. Upload this folder for the skill listing:
+
+```text
+skills/visual-memory
+```
+
+Do not upload the repository root in the Skills tab. The root is the
+plugin/package root and includes repo-level files such as `LICENSE`, which the
+skill upload flow does not accept. Use a non-protected skill slug such as
+`visual-memory` or `mneme-visual-memory`; `openclaw-*` slugs are reserved.
+
 ## OpenClaw GPU Surface
 
 Mneme includes GPU broker tools so local creator workflows can release VRAM

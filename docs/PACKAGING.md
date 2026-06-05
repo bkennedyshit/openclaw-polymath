@@ -55,6 +55,30 @@ The public listing should make three points clear:
   https://axon.nepa-ai.com, while Mneme product information lives at
   https://mneme.nepa-ai.com.
 
+## ClawHub Skill Upload
+
+Do not upload the repository root in ClawHub's Skills tab. The repo root is the
+plugin/package root, so the skill publisher will report:
+
+- missing `SKILL.md`
+- unsupported repo-level `LICENSE`
+- protected `openclaw-*` slug if the folder name starts with `openclaw`
+
+For the Skills tab, upload this folder instead:
+
+```text
+skills/visual-memory
+```
+
+Recommended skill listing:
+
+- Display name: `Visual Memory`
+- Slug: `visual-memory` or `mneme-visual-memory`
+- Description: `Local photo/video visual memory for OpenClaw, powered by Mneme.`
+
+The repo/package root belongs in the plugin/package publication flow, not the
+skill-only upload flow.
+
 ## Release Checklist
 
 - Run a leak scan for private terms and credentials.

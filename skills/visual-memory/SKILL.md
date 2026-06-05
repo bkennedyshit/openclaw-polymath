@@ -1,15 +1,14 @@
 ---
 name: visual-memory
 description: Use local visual memory tools to index and search photos and videos from creator media libraries.
-tools:
-  - media_index
-  - media_search
-  - media_search_by_image
-  - media_describe
-  - gpu_status
-  - gpu_release
-  - gpu_reclaim
-  - gpu_evacuate
+version: 0.2.0
+metadata:
+  openclaw:
+    requires:
+      bins:
+        - mcporter
+    emoji: "🧠"
+    homepage: https://mneme.nepa-ai.com
 ---
 
 # Visual Memory
