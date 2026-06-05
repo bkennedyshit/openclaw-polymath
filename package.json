@@ -5,9 +5,65 @@
   "type": "module",
   "license": "MIT",
   "homepage": "https://github.com/bkennedyshit/openclaw-polymath",
+  "keywords": [
+    "openclaw",
+    "clawhub",
+    "mneme",
+    "polymath",
+    "visual-memory",
+    "rag",
+    "gpu"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bkennedyshit/openclaw-polymath.git"
+  },
+  "metadata": {
+    "clawhub": {
+      "displayName": "Polymath Visual Memory",
+      "slug": "polymath-visual-memory",
+      "family": "code-plugin",
+      "channel": "community",
+      "summary": "OpenClaw plugin and skill package for local visual memory and Mneme GPU broker controls.",
+      "ownerHandle": "bkennedyshit",
+      "capabilityTags": [
+        "visual-memory",
+        "media-search",
+        "gpu-broker",
+        "mcp",
+        "creator-tools"
+      ],
+      "capabilities": {
+        "executesCode": true,
+        "runtimeId": "mneme",
+        "pluginKind": "code-plugin",
+        "hostTargets": [
+          "openclaw"
+        ],
+        "bundledSkills": [
+          "visual-memory"
+        ],
+        "capabilityTags": [
+          "visual-memory",
+          "media-search",
+          "gpu-broker",
+          "mcp",
+          "creator-tools"
+        ]
+      },
+      "compatibility": {
+        "minGatewayVersion": "2026.4.12"
+      },
+      "links": {
+        "axon": "https://axon.nepa-ai.com",
+        "mneme": "https://mneme.nepa-ai.com",
+        "clawhub": "https://clawhub.ai/"
+      }
+    },
+    "openclaw": {
+      "displayName": "Polymath Visual Memory",
+      "summary": "Local visual memory and GPU broker controls for OpenClaw, powered by Mneme."
+    }
   },
   "files": [
     "openclaw.plugin.json",
