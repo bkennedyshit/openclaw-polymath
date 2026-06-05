@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mneme GPU Broker</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0d10;
+        --panel: #12161b;
+        --panel-2: #171c22;
+        --text: #eef3f8;
+        --muted: #8f9baa;
+        --line: #2a323c;
+        --accent: #5ee1a2;
+        --warn: #f2c96d;
+        --bad: #ff7a90;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        width: min(860px, calc(100vw - 32px));
+        margin: 32px auto;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 650;
+        letter-spacing: 0;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--warn);
+      }
+
+      .dot.ok {
+        background: var(--accent);
+      }
+
+      .dot.err {
+        background: var(--bad);
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-bottom: 1px solid var(--line);
+      }
+
+      .metric {
+        padding: 18px;
+        border-right: 1px solid var(--line);
+      }
+
+      .metric:last-child {
+        border-right: 0;
+      }
+
+      .label {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+
+      .value {
+        display: block;
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .bar {
+        height: 10px;
+        background: #0a0d10;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .bar > div {
+        width: 0%;
+        height: 100%;
+        background: var(--accent);
+        transition: width 180ms ease;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 16px;
+        background: var(--panel-2);
+      }
+
+      button {
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #0f1318;
+        color: var(--text);
+        padding: 0 13px;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      button:hover {
+        border-color: #506070;
+      }
+
+      button.primary {
+        border-color: #2b7b5a;
+        background: #123324;
+      }
+
+      button.danger {
+        border-color: #83404e;
+        background: #32151b;
+      }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.65;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .box {
+        min-height: 96px;
+        padding: 12px;
+        background: #0e1216;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+      }
+
+      .box h2 {
+        margin: 0 0 8px;
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        color: #cbd5df;
+        font-size: 12px;
+      }
+
+      @media (max-width: 720px) {
+        header,
+        .details {
+          grid-template-columns: 1fr;
+        }
+
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .metric {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Mneme GPU Broker</h1>
+        <span class="status"><span id="dot" class="dot"></span><span id="state">checking</span></span>
+      </header>
+
+      <section class="panel" aria-label="GPU broker controls">
+        <div class="grid">
+          <div class="metric">
+            <span class="label">VRAM Used</span>
+            <span id="used" class="value">-- MB</span>
+          </div>
+          <div class="metric">
+            <span class="label">VRAM Total</span>
+            <span id="total" class="value">-- MB</span>
+          </div>
+          <div class="metric">
+            <span class="label">Lease</span>
+            <span id="lease" class="value">--</span>
+          </div>
+        </div>
+        <div class="bar" aria-hidden="true"><div id="bar"></div></div>
+        <div class="actions">
+          <button id="refresh">Refresh</button>
+          <button id="release" class="primary">Release GPU</button>
+          <button id="evacuate">Evacuate Ollama</button>
+          <button id="reclaim" class="danger">Reclaim</button>
+        </div>
+        <div class="details">
+          <div class="box">
+            <h2>Loaded Models</h2>
+            <pre id="models">--</pre>
+          </div>
+          <div class="box">
+            <h2>Last Result</h2>
+            <pre id="raw">--</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const els = {
+        dot: document.querySelector("#dot"),
+        state: document.querySelector("#state"),
+        used: document.querySelector("#used"),
+        total: document.querySelector("#total"),
+        lease: document.querySelector("#lease"),
+        bar: document.querySelector("#bar"),
+        models: document.querySelector("#models"),
+        raw: document.querySelector("#raw"),
+        buttons: [...document.querySelectorAll("button")],
+      };
+
+      let leaseToken = null;
+
+      function setBusy(busy) {
+        els.buttons.forEach((button) => {
+          button.disabled = busy;
+        });
+      }
+
+      function render(payload) {
+        const data = typeof payload.result === "string" ? JSON.parse(payload.result) : payload;
+        const total = Number(data.vram_total_mb || data.status?.vram_total_mb || 0);
+        const used = Number(data.vram_used_mb || data.status?.vram_used_mb || 0);
+        const lease = data.lease || data.status?.lease || null;
+        const models = data.loaded_models || data.status?.loaded_models || [];
+        const state = typeof data.status === "string" ? data.status : data.status?.status || "ok";
+
+        if (lease?.token) leaseToken = lease.token;
+
+        els.state.textContent = state;
+        els.dot.className = `dot ${data.ok === false ? "err" : "ok"}`;
+        els.used.textContent = `${used} MB`;
+        els.total.textContent = `${total} MB`;
+        els.lease.textContent = lease ? "claimed" : "idle";
+        els.bar.style.width = total ? `${Math.min(100, Math.round((used / total) * 100))}%` : "0%";
+        els.models.textContent = models.length ? models.join("\n") : "none";
+        els.raw.textContent = JSON.stringify(data, null, 2);
+      }
+
+      async function call(action, body = {}) {
+        setBusy(true);
+        try {
+          const res = await fetch(`/api/gpu/${action}`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          const payload = await res.json();
+          if (!res.ok) throw new Error(payload.error || res.statusText);
+          render(payload);
+        } catch (err) {
+          els.dot.className = "dot err";
+          els.state.textContent = "error";
+          els.raw.textContent = err.stack || String(err);
+        } finally {
+          setBusy(false);
+        }
+      }
+
+      document.querySelector("#refresh").addEventListener("click", () => call("status"));
+      document.querySelector("#release").addEventListener("click", () =>
+        call("release", { reason: "manual UI release", hold_minutes: 60 })
+      );
+      document.querySelector("#evacuate").addEventListener("click", () => call("evacuate"));
+      document.querySelector("#reclaim").addEventListener("click", () =>
+        call("reclaim", { token: leaseToken || "force" })
+      );
+
+      call("status");
+      setInterval(() => call("status"), 15000);
+    </script>
+  </body>
+</html>
