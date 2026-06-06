@@ -298,7 +298,10 @@
       async function call(action, body = {}) {
         setBusy(true);
         try {
-          const res = await fetch(`api/${action}`, {
+          const routeBase = location.pathname.endsWith("/")
+            ? location.pathname
+            : `${location.pathname}/`;
+          const res = await fetch(`${routeBase}api/${action}`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(body),
