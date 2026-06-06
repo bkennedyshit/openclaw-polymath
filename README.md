@@ -109,6 +109,29 @@ The GPU methods call the local `mneme` MCP tools through `mcporter`. The media
 methods call the local Polymath gateway and reuse the existing local media index
 when `POLYMATH_TOKEN` or `~/.polymath/auth.key` is available.
 
+### GPU Quickstart
+
+Open the GPU control surface from OpenClaw at:
+
+```text
+/mneme/gpu
+```
+
+Use it this way:
+
+- `Status`: inspect current VRAM usage, lease state, and loaded local models.
+- `Evacuate Ollama`: immediately unload Ollama models to clear VRAM.
+- `Release GPU`: unload models and create a temporary lease for another workflow.
+- `Reclaim`: end the active lease after the render, generation, or local task is done.
+
+From chat, users can ask:
+
+```text
+Check Mneme GPU status.
+Evacuate Mneme GPU memory before I run a render.
+Reclaim the Mneme GPU lease.
+```
+
 Native persistent Control UI sidebar injection depends on OpenClaw exposing or
 accepting a frontend extension point. Until then, `/mneme/gpu` is the public
 demo surface and the gateway methods are the backend contract.

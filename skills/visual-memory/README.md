@@ -38,6 +38,23 @@ https://clawhub.ai/ and use this skill with the `mneme` MCP server above.
 - `gpu_reclaim`: end a prior GPU lease.
 - `gpu_evacuate`: unload Ollama models immediately without creating a lease.
 
+## GPU Quickstart
+
+Open the OpenClaw plugin page at `/mneme/gpu`.
+
+- Use `Status` before a GPU-heavy task.
+- Use `Evacuate Ollama` when you need VRAM cleared immediately.
+- Use `Release GPU` when another workflow needs the card for a while.
+- Use `Reclaim` when that workflow is done.
+
+Chat prompts that should work with the skill:
+
+```text
+Check Mneme GPU status.
+Evacuate Mneme GPU memory before I run a render.
+Reclaim the Mneme GPU lease.
+```
+
 ## Uploaded Media
 
 If the user sends a photo/video/reel into chat, treat that upload as temporary

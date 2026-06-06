@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenClaw Polymath Teleprompter</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #050505;
+      color: #f7f7f7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #050505;
+      overflow: hidden;
+    }
+
+    .bar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid #2a2a2a;
+      background: rgba(5, 5, 5, 0.92);
+    }
+
+    button {
+      min-width: 44px;
+      min-height: 36px;
+      border: 1px solid #3a3a3a;
+      border-radius: 6px;
+      background: #151515;
+      color: #f7f7f7;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: #f7f7f7;
+      color: #050505;
+      border-color: #f7f7f7;
+      font-weight: 700;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #cfcfcf;
+      font-size: 13px;
+    }
+
+    input[type="range"] {
+      width: 160px;
+    }
+
+    .script {
+      height: 100vh;
+      overflow: hidden;
+      padding: 20vh 8vw 45vh;
+    }
+
+    .inner {
+      max-width: 980px;
+      margin: 0 auto;
+      font-size: 58px;
+      line-height: 1.32;
+      font-weight: 700;
+      letter-spacing: 0;
+      will-change: transform;
+    }
+
+    p {
+      margin: 0 0 1.4em;
+    }
+
+    .mark {
+      color: #75d5ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <button id="toggle" class="primary">Start</button>
+    <button id="back">Back</button>
+    <button id="top">Top</button>
+    <label>Speed <input id="speed" type="range" min="0.2" max="3" step="0.1" value="0.9"></label>
+    <label>Size <input id="size" type="range" min="36" max="86" step="2" value="58"></label>
+  </div>
+  <main id="script" class="script">
+    <div id="inner" class="inner">
+      <p><span class="mark">This is Polymath running inside OpenClaw.</span></p>
+      <p>First, I am using local visual memory. I already indexed my image and video library, so I do not have to re-upload or rebuild the RAG set for this demo.</p>
+      <p>OpenClaw can ask Polymath for media matches, pull back images, video segments, paths, and metadata, then use those results to write real content.</p>
+      <p>Here is the workflow: I search for a scene, OpenClaw gets the best visual matches from my local library, and then I ask it to turn those matches into ad copy, captions, or a post.</p>
+      <p>It is not generic prompt output. It is grounded in the actual media on this machine.</p>
+      <p>Now the GPU side. Polymath also exposes Mneme GPU controls through OpenClaw.</p>
+      <p>Before I kick off a render or another local model workflow, I can check VRAM, release the GPU, evacuate Ollama models, and reclaim the lease afterward.</p>
+      <p>That matters because creators are constantly switching between search, writing, image generation, video tools, and local models.</p>
+      <p>This gives them a button and a tool call to clear VRAM instead of hunting through terminals.</p>
+      <p>So the demo is three things in one flow: local photo and video RAG, content generation from those media results, and GPU memory control from OpenClaw.</p>
+      <p><span class="mark">This is available as the Polymath Visual Memory package on ClawHub, with more skills and Mneme resources at mneme.nepa-ai.com and axon.nepa-ai.com.</span></p>
+    </div>
+  </main>
+  <script>
+    const scroller = document.querySelector("#script");
+    const inner = document.querySelector("#inner");
+    const toggle = document.querySelector("#toggle");
+    const speed = document.querySelector("#speed");
+    const size = document.querySelector("#size");
+    let running = false;
+    let last = 0;
+    let offset = 0;
+
+    function maxOffset() {
+      return Math.max(0, inner.scrollHeight + window.innerHeight * 0.65 - scroller.clientHeight);
+    }
+
+    function setOffset(value) {
+      offset = Math.min(maxOffset(), Math.max(0, value));
+      inner.style.transform = `translateY(${-offset}px)`;
+    }
+
+    function tick(now) {
+      if (!last) last = now;
+      const delta = now - last;
+      last = now;
+      if (running) setOffset(offset + delta * Number(speed.value) * 0.045);
+      requestAnimationFrame(tick);
+    }
+
+    toggle.addEventListener("click", () => {
+      running = !running;
+      toggle.textContent = running ? "Pause" : "Start";
+    });
+
+    document.querySelector("#top").addEventListener("click", () => {
+      setOffset(0);
+    });
+
+    document.querySelector("#back").addEventListener("click", () => {
+      setOffset(offset - 260);
+    });
+
+    size.addEventListener("input", () => {
+      inner.style.fontSize = `${size.value}px`;
+      setOffset(offset);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.code === "Space") {
+        event.preventDefault();
+        toggle.click();
+      }
+      if (event.code === "ArrowUp") setOffset(offset - 160);
+      if (event.code === "ArrowDown") setOffset(offset + 160);
+    });
+
+    window.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      setOffset(offset + event.deltaY);
+    }, { passive: false });
+
+    window.addEventListener("resize", () => setOffset(offset));
+
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
